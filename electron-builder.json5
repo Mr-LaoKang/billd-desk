@@ -12,6 +12,9 @@
     output: 'electron-release/${version}',
   },
   files: ['dist', 'electron-dist'],
+  // 跳过原生模块重编译：ssh2 的可选依赖 cpu-features 没有 Electron 33 的预编译二进制，
+  // CI 上现场编译需要 VS/build-essential 且易失败；ssh2 对 cpu-features 做了可选降级处理。
+  npmRebuild: false,
   mac: {
     target: ['dmg'],
     artifactName: '${productName}-mac-${platform}-${version}-${arch}-installer.${ext}',
